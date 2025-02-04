@@ -1,5 +1,5 @@
-import SignupPage from "@/features/auth/signup/SignupPage";
 import React from "react";
+import SignupPage from "@/features/auth/signup/SignupPage";
 
 const page = () => <SignupPage />;
 

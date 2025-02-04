@@ -30,6 +30,7 @@ import {
   AlreadyUserOrNotText,
   dividerStyles,
 } from "../styles";
+import { routes } from "@/constants/Routes";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -64,18 +65,25 @@ const SignupForm = () => {
     });
   };
 
-  const onSubmit: SubmitHandler<SignupFormInputsType> = async (data) => {
+  const onSubmit: SubmitHandler<SignupFormInputsType> = async (formData) => {
     setSubmittingForm(true);
-    const res = await authService.signup(data);
-    if (res) {
+
+    const res = await authService.signup(formData);
+    const { data, status, hasError } = res;
+
+    // Check on component level for extra robustness
+    const resOK = data && status === 201 && !hasError;
+
+    if (resOK) {
       handleClearForm();
       handleRedirectToLogin();
     }
+
     setSubmittingForm(false);
   };
 
   const handleRedirectToLogin = () => {
-    router.push("/auth/login");
+    router.push(routes.authLogin);
   };
 
   return (

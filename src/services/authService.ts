@@ -2,6 +2,8 @@ import api from "@/api";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import { ApiResponse } from "@/api/types";
 import { toast } from "react-toastify";
+import { commonResponseWithError } from "./utils";
+import { ToastMessages } from "@/constants/Toasts";
 
 export interface SignupPayload {
   firstName: string;
@@ -41,14 +43,22 @@ export const authService = {
         payload,
       );
 
-      const { data, message, hasError } = response;
+      const { message, hasError } = response;
 
       // Error toasts are already handled in api utility
       if (!hasError) toast.success(message);
 
-      return data;
+      return response;
     } catch {
-      toast.error("Oops! Something went wrong.");
+      /*
+        If this is reached, means it can be one of the following reasons:
+        1. timeout of 10000 is reached by api
+        2. TODO: Add one if you find any
+      */
+
+      toast.error(ToastMessages.common.error.SomethingWentWrong);
+
+      return commonResponseWithError;
     }
   },
 
@@ -59,9 +69,29 @@ export const authService = {
    * @returns {Promise<Response>}
    */
   login: async (payload: LoginPayload) => {
-    const response = await api.post(API_ENDPOINTS.LOGIN, payload);
+    try {
+      const response: ApiResponse = await api.post(
+        API_ENDPOINTS.LOGIN,
+        payload,
+      );
 
-    return response.data;
+      const { message, hasError } = response;
+
+      // Error toasts are already handled in api utility
+      if (!hasError) toast.success(message);
+
+      return response;
+    } catch {
+      /*
+        If this is reached, means it can be one of the following reasons:
+        1. timeout of 10000 is reached by api
+        2. TODO: Add one if you find any
+      */
+
+      toast.error(ToastMessages.common.error.SomethingWentWrong);
+
+      return commonResponseWithError;
+    }
   },
 
   /**
@@ -76,14 +106,23 @@ export const authService = {
         payload,
       );
 
-      const { data, message, hasError } = response;
+      const { message, hasError } = response;
 
       // Error toasts are already handled in api utility
       if (!hasError) toast.success(message);
 
-      return data;
+      return response;
     } catch {
-      toast.error("Oops! Something went wrong.");
+      /*
+        If this is reached, means it can be one of the following reasons:
+        1. timeout of 10000 is reached by api
+        2. api being called with low internet connection or offline mode
+        3. TODO: Add one if you find any
+      */
+
+      toast.error(ToastMessages.common.error.SomethingWentWrong);
+
+      return commonResponseWithError;
     }
   },
 };

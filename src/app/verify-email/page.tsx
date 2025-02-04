@@ -1,6 +1,7 @@
 "use client";
 
 import AppLoader from "@/components/common/loading/AppLoader";
+import { routes } from "@/constants/Routes";
 import { authService } from "@/services/authService";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
@@ -16,7 +17,8 @@ const VerifyEmailPage = () => {
     await authService.verifyEmail({
       token,
     });
-    router.replace("/auth/login");
+
+    router.replace(routes.authLogin);
   };
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const VerifyEmailPage = () => {
       toast.error(
         "Url to verify email is invalid! Retry the process or contact us.",
       );
-      router.replace("/auth/login");
+      router.replace(routes.authLogin);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

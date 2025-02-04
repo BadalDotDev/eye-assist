@@ -20,6 +20,8 @@ import { loginSchema } from "../utils/utils";
 import InputField from "../shared/TextInputField";
 import PasswordInputField from "../shared/PasswordInputField";
 import { useState } from "react";
+import { authService } from "@/services/authService";
+import { routes } from "@/constants/Routes";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -37,17 +39,27 @@ const LoginForm = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const onSubmit: SubmitHandler<LoginFormInputsType> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormInputsType> = async (formData) => {
     setSubmittingForm(true);
 
-    // TODO: Call login api from authService
-    console.log(data);
+    const res = await authService.login({
+      email: formData.email,
+      password: formData.password,
+    });
+    const { data, status, hasError } = res;
+
+    // Check on component level for extra robustness
+    const resOK = data && status === 200 && !hasError;
+
+    if (resOK) {
+      router.push(routes.comingSoon);
+    }
 
     setSubmittingForm(false);
   };
 
   const handleRedirectToSignup = () => {
-    router.push("/auth/signup");
+    router.push(routes.authSignup);
   };
 
   return (
@@ -82,7 +94,7 @@ const LoginForm = () => {
             <AuthBtn
               label="Login"
               type="submit"
-              variant="outlined"
+              variant="contained"
               disabled={submittingForm}
             />
           </Grid2>
