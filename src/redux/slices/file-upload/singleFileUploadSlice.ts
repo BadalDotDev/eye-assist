@@ -14,7 +14,8 @@ export const singleFileUpload = createAsyncThunk(
     try {
       const res = await fileUploadService.singleFileUpload(payload);
       return res;
-    } catch (error: any) {
+    } catch (error) {
+      console.error(error);
       return rejectWithValue(null);
     }
   },
@@ -57,11 +58,11 @@ const singleFileUploadSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(singleFileUpload.pending, (state) => {
       state.isLoading = true;
-    }),
-      builder.addCase(singleFileUpload.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.details = action.payload.data;
-      });
+    });
+    builder.addCase(singleFileUpload.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.details = action.payload.data;
+    });
   },
 });
 

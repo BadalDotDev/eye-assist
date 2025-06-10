@@ -27,10 +27,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import VideoLabelIcon from "@mui/icons-material/VideoLabel";
 import { setAppLoading } from "@/redux/slices/ui/uiSlice";
-import {
-  selectUserData,
-  selectUserDataIsLoading,
-} from "@/redux/slices/user/selectors";
+import { selectUserData } from "@/redux/slices/user/selectors";
 import { selectCurrentStep } from "@/redux/slices/onboarding/selectors";
 
 export const stepIcons: { [index: string]: React.ReactElement<unknown> } = {
@@ -49,7 +46,6 @@ const Onboarding = () => {
 
   const currentStep = useAppSelector(selectCurrentStep);
   const userDetails = useAppSelector(selectUserData);
-  const isUserDataLoading = useAppSelector(selectUserDataIsLoading);
 
   const queryStep = Number(searchParams.get("step"));
 
@@ -81,6 +77,8 @@ const Onboarding = () => {
 
   useEffect(() => {
     getUserDetailsAPICall();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // When user change the step from search bar
@@ -93,6 +91,8 @@ const Onboarding = () => {
 
     if (isParamStepValid && !isExceedingCompletedStep)
       handleStepChange(queryStep);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryStep]);
 
   return (
@@ -118,8 +118,6 @@ const Onboarding = () => {
           steps={steps}
           activeStep={currentStep}
           handleStepChange={handleStepChange}
-          getUserDetailsAPICall={getUserDetailsAPICall}
-          isStepReady={isUserDataLoading}
         />
       </StepperAndFormContainer>
 

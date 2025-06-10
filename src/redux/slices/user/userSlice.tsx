@@ -16,7 +16,9 @@ export const getUserDetails = createAsyncThunk<
     const userDetails = await userService.getUserDetails();
 
     return userDetails;
-  } catch (error: any) {
+  } catch (error) {
+    console.error(error);
+
     return rejectWithValue(null);
   }
 });
@@ -27,7 +29,9 @@ export const getAllQualificationsAPI = createAsyncThunk(
     try {
       const res = await userService.getAllQualifications();
       return res;
-    } catch (error: any) {
+    } catch (error) {
+      console.error(error);
+
       return rejectWithValue(null);
     }
   },
@@ -39,7 +43,9 @@ export const getAllStreamsAPI = createAsyncThunk(
     try {
       const res = await userService.getAllStreams(params);
       return res;
-    } catch (error: any) {
+    } catch (error) {
+      console.error(error);
+
       return rejectWithValue(null);
     }
   },
@@ -75,62 +81,62 @@ const userSlice = createSlice({
         state.data = action.payload;
         state.role = action.payload?.role;
       })
-      .addCase(getUserDetails.rejected, (state, action) => {
+      .addCase(getUserDetails.rejected, (state) => {
         state.isLoading = false;
         state.data = null;
-      }),
-      builder.addCase(getAllQualificationsAPI.fulfilled, (state, action) => {
-        if (action.payload.data) {
-          const { count, rows } = action.payload.data;
-          let qualificationOptionsList: QualificationsListType[] = [];
-
-          if (count > 0 && rows.length) {
-            rows.map((row) => {
-              const label = row.qualification;
-              const value = row.id;
-              qualificationOptionsList.push({
-                label,
-                value,
-              });
-            });
-          }
-
-          qualificationOptionsList.push({
-            label: "Other",
-            value: "other",
-          });
-
-          state.qualificationList = qualificationOptionsList;
-        } else {
-          state.qualificationList = [];
-        }
-      }),
-      builder.addCase(getAllStreamsAPI.fulfilled, (state, action) => {
-        if (action.payload.data) {
-          const { count, rows } = action.payload.data;
-          let streamsOptionsList: StreamsListType[] = [];
-
-          if (count > 0 && rows.length) {
-            rows.map((row) => {
-              const label = row.stream;
-              const value = row.id;
-              streamsOptionsList.push({
-                label,
-                value,
-              });
-            });
-          }
-
-          streamsOptionsList.push({
-            label: "Other",
-            value: "other",
-          });
-
-          state.streamsList = streamsOptionsList;
-        } else {
-          state.streamsList = [];
-        }
       });
+    builder.addCase(getAllQualificationsAPI.fulfilled, (state, action) => {
+      if (action.payload.data) {
+        const { count, rows } = action.payload.data;
+        const qualificationOptionsList: QualificationsListType[] = [];
+
+        if (count > 0 && rows.length) {
+          rows.map((row) => {
+            const label = row.qualification;
+            const value = row.id;
+            qualificationOptionsList.push({
+              label,
+              value,
+            });
+          });
+        }
+
+        qualificationOptionsList.push({
+          label: "Other",
+          value: "other",
+        });
+
+        state.qualificationList = qualificationOptionsList;
+      } else {
+        state.qualificationList = [];
+      }
+    });
+    builder.addCase(getAllStreamsAPI.fulfilled, (state, action) => {
+      if (action.payload.data) {
+        const { count, rows } = action.payload.data;
+        const streamsOptionsList: StreamsListType[] = [];
+
+        if (count > 0 && rows.length) {
+          rows.map((row) => {
+            const label = row.stream;
+            const value = row.id;
+            streamsOptionsList.push({
+              label,
+              value,
+            });
+          });
+        }
+
+        streamsOptionsList.push({
+          label: "Other",
+          value: "other",
+        });
+
+        state.streamsList = streamsOptionsList;
+      } else {
+        state.streamsList = [];
+      }
+    });
   },
 });
 

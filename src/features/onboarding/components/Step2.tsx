@@ -28,6 +28,8 @@ const Step2 = ({ control, errors }: Props) => {
 
   useEffect(() => {
     fetchQualifications();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

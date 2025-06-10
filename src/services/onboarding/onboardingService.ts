@@ -23,7 +23,6 @@ export const onboardingService = {
         API_ENDPOINTS.ONBOARD_USER,
         payload,
       );
-      const { message, hasError } = response;
       return response;
     } catch (error) {
       /*
@@ -31,7 +30,7 @@ export const onboardingService = {
         1. timeout of 10000 is reached by api
         2. TODO: Add one if you find any
       */
-
+      console.error(error)
       toast.error(errorMessages.common.somethingWentWrong);
 
       return commonResponseWithError;

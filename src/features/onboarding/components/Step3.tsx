@@ -30,7 +30,7 @@ const Step3 = ({ control }: Props) => {
           <Controller
             control={control}
             name="certificateId"
-            render={({ field }) => {
+            render={() => {
               return <ImageUpload aspectRatio={ASPECT_RATIO.CERTIFICATE} />;
             }}
           />

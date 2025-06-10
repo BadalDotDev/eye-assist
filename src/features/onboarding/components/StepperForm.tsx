@@ -34,17 +34,9 @@ interface Props {
   steps: { value: number; label: string }[];
   activeStep: number;
   handleStepChange: (newStep: number) => void;
-  getUserDetailsAPICall: () => void;
-  isStepReady: boolean;
 }
 
-const StepperForm = ({
-  steps,
-  activeStep,
-  handleStepChange,
-  getUserDetailsAPICall,
-  isStepReady,
-}: Props) => {
+const StepperForm = ({ steps, activeStep, handleStepChange }: Props) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const userDetails = useAppSelector(selectUserData);
@@ -58,7 +50,6 @@ const StepperForm = ({
   const {
     formState: { errors },
     control,
-    watch,
     reset,
     handleSubmit,
   } = methods;
@@ -76,6 +67,8 @@ const StepperForm = ({
       aboutMe: userDetails?.aboutMe ?? undefined,
       certificateId: userDetails?.certificateId ?? undefined,
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDetails, methods]);
 
   const uploadCeritificateAPICall = async (file: UploadedFileType) => {
@@ -191,7 +184,7 @@ const StepperForm = ({
   const StepContent = () => {
     switch (activeStep) {
       case 1:
-        return <Step1 control={control} watch={watch} errors={errors} />;
+        return <Step1 control={control} errors={errors} />;
 
       case 2:
         return <Step2 control={control} errors={errors} />;
@@ -226,7 +219,7 @@ const StepperForm = ({
             }}
           />
         </SkipBtnContainer>
-        {/* {!isStepReady ? <AppLoader /> : StepContent()} */}
+
         {StepContent()}
         <BackAndNextBtnContainer>
           <PrimaryButton

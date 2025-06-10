@@ -1,6 +1,6 @@
 import { Grid2, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-import { Control, FieldErrors, UseFormWatch } from "react-hook-form";
+import { Control, FieldErrors } from "react-hook-form";
 import { StepContainer } from "../styles";
 import RenderField from "./RenderField";
 
@@ -15,11 +15,10 @@ export interface Step1FormFields {
 
 interface Props {
   control: Control;
-  watch: UseFormWatch<Step1FormFields>;
   errors: FieldErrors<Step1FormFields>;
 }
 
-const Step1 = ({ control, watch, errors }: Props) => {
+const Step1 = ({ control, errors }: Props) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 

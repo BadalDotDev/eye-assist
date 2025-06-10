@@ -5,13 +5,7 @@ import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 
 //mui
-import {
-  Box,
-  Typography,
-  CircularProgress,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
+import { Box, Typography, Tooltip, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 //third party
@@ -23,10 +17,6 @@ import ImageCrop from "./ImageCrop";
 import { ASPECT_RATIO, MAX_COVER_IMAGE_SIZE } from "@/constants/images";
 import { errorMessages } from "@/constants/messages/error";
 import { convertAcceptArrayToObject } from "@/utils/image";
-import {
-  CurrentImageType,
-  UploadedFileType,
-} from "@/services/file-upload/type";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   selectCurrentImage,
@@ -69,7 +59,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     imageTypeValidation: errorMessages.image.imageTypeValidation,
     maxPostImageSize: errorMessages.image.maxPostImageSize,
   },
-  ...rest
 }) => {
   const dispatch = useAppDispatch();
   const currentImage = useAppSelector(selectCurrentImage);
@@ -78,7 +67,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   //states
   const [cropModalOpen, setCropModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Loading state for cropping
 
   // Clean up object URLs to prevent memory leaks
   useEffect(() => {
@@ -136,6 +124,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         );
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [validateFile, handleFileProcessing, setUploadedFile, showCropper],
   );
 
@@ -175,6 +165,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       );
       setCropModalOpen(false);
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [handleFileProcessing, setUploadedFile],
   );
 
@@ -282,12 +274,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </Box>
         )}
       </Box>
-
-      {isLoading && (
-        <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
-          <CircularProgress />
-        </Box>
-      )}
 
       {/* Image Crop Modal */}
       {selectedImage && (

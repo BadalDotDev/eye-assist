@@ -34,7 +34,7 @@ export const fileUploadService = {
         1. timeout of 10000 is reached by api
         2. TODO: Add one if you find any
       */
-
+      console.error(error)
       toast.error(errorMessages.common.somethingWentWrong);
 
       return commonResponseWithError;

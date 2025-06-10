@@ -16,6 +16,8 @@ import DialogCloseButton from "../buttons/DialogCloseButton";
 
 const ImageCrop = ({ toggle, modal, imageData, onFileSave, aspectRatio }) => {
   //state
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [disableBtn, setDisableBtn] = useState(true);
 
   //Custom hook for image cropping

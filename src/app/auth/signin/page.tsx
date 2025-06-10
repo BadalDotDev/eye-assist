@@ -35,6 +35,8 @@ export default function SigninPage() {
     if (authToken) {
       router.replace("/onboarding?step=1");
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
   if (isAppLoading) return <AppLoader />;

@@ -8,7 +8,8 @@ export const onboardUser = createAsyncThunk(
     try {
       const res = await onboardingService.onboardUser(payload);
       return res;
-    } catch (error: any) {
+    } catch (error) {
+      console.error(error);
       return rejectWithValue(null);
     }
   },
@@ -50,10 +51,10 @@ const onboardingSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(onboardUser.pending, (state) => {
       state.isLoading = true;
-    }),
-      builder.addCase(onboardUser.fulfilled, (state) => {
-        state.isLoading = false;
-      });
+    });
+    builder.addCase(onboardUser.fulfilled, (state) => {
+      state.isLoading = false;
+    });
   },
 });
 

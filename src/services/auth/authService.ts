@@ -20,8 +20,6 @@ export interface LoginPayload {
   password: string;
 }
 
-export interface LoginDataResponse {}
-
 export interface VerifyEmailPayload {
   token: string;
 }
