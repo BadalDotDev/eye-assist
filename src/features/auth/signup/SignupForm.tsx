@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Box, Divider, Grid2, useMediaQuery, useTheme } from "@mui/material";
+import { Divider, Grid2, useMediaQuery, useTheme } from "@mui/material";
 
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,15 +9,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ScribeImage from "@/assets/Scribe3D.png";
 import StudentImage from "@/assets/Student3D.png";
 import AuthBtn from "@/components/common/buttons/AuthBtn";
-import { authService } from "@/services/authService";
+import { authService } from "@/services/auth/authService";
 import { signupSchema, usernameRules } from "../utils/utils";
 import PasswordInputField from "../shared/PasswordInputField";
 import InputField from "../shared/TextInputField";
-import ErrorHelpMessage from "../shared/ErrorHelpMessage";
 
 import { SignupFormInputsType, UserRoleEnum } from "../type";
 import {
-  flexRow,
   RoleImage,
   RoleInputContainer,
   RoleTitle,
@@ -29,8 +27,10 @@ import {
   JumpToLoginOrSignupText,
   AlreadyUserOrNotText,
   dividerStyles,
+  SwitchAuthFormContainer,
 } from "../styles";
 import { routes } from "@/constants/Routes";
+import ErrorHelpMessage from "@/components/common/form-elements/ErrorHelpMessage";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -83,7 +83,7 @@ const SignupForm = () => {
   };
 
   const handleRedirectToLogin = () => {
-    router.push(routes.authLogin);
+    router.push(routes.authSignin);
   };
 
   return (
@@ -207,13 +207,13 @@ const SignupForm = () => {
           <Divider sx={dividerStyles} />
         </Seperator>
 
-        <Box sx={{ ...flexRow, gap: "8px" }}>
+        <SwitchAuthFormContainer>
           <AlreadyUserOrNotText>Already have an account?</AlreadyUserOrNotText>
 
           <JumpToLoginOrSignupText onClick={handleRedirectToLogin}>
-            Login
+            Sign In
           </JumpToLoginOrSignupText>
-        </Box>
+        </SwitchAuthFormContainer>
       </FormBottomSection>
     </StyledForm>
   );

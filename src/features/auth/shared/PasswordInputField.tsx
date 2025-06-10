@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FieldErrors } from "react-hook-form";
 import { IconButton, InputAdornment } from "@mui/material";
@@ -8,7 +9,7 @@ import {
   StyledOutlinedInput,
 } from "../styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import ErrorHelpMessage from "./ErrorHelpMessage";
+import ErrorHelpMessage from "@/components/common/form-elements/ErrorHelpMessage";
 
 const PasswordInputField = ({
   field,

@@ -11,9 +11,9 @@ const theme = createTheme({
       dark: "#051821",
       contrastText: "#fff",
     },
-    secondary: {
-      main: "#FFC107",
-    },
+    // secondary: {
+    //   main: "#FFC107",
+    // },
     error: {
       main: "#f44336",
     },
@@ -30,10 +30,11 @@ const theme = createTheme({
       main: "#4caf50",
     },
     // divider: "",
-    // background: {
-    //   paper: "#ffffff",
-    //   default: "#f4f6f8",
-    // },
+    background: {
+      paper: "#ffffff",
+      default: "#1F4A5A26",
+    },
+    
   },
 });
 

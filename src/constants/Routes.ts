@@ -1,6 +1,7 @@
 export enum routes {
   authSignup = "/auth/signup",
-  authLogin = "/auth/login",
-  comingSoon = "/coming-soon",
+  authSignin = "/auth/signin",
   home = "/home",
+  onboarding = "/onboarding",
+  comingSoon = "/coming-soon",
 }

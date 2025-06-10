@@ -1,24 +1,10 @@
-"use client";
-
 import AppLoader from "@/components/common/loading/AppLoader";
-import { routes } from "@/constants/Routes";
-import { useAuth } from "@/context/auth/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function Home() {
-  const { user } = useAuth();
-  const router = useRouter();
+// export const metadata: Metadata = {
+//   title: "Eye Assist",
+//   description: "Eye Assist ",
+// };
 
-  useEffect(() => {
-    if (user) {
-      router.replace(routes.home);
-    } else {
-      router.replace(routes.authSignup);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+export default function Root() {
   return <AppLoader />;
 }

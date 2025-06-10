@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { ControllerRenderProps, FieldErrors } from "react-hook-form";
 import { fieldsMap, placeholderList } from "../utils/utils";
@@ -6,7 +7,7 @@ import {
   StyledTextfieldInput,
   TextfieldInputContainer,
 } from "../styles";
-import ErrorHelpMessage from "./ErrorHelpMessage";
+import ErrorHelpMessage from "@/components/common/form-elements/ErrorHelpMessage";
 
 const InputField = ({
   field,

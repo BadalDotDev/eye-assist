@@ -1,4 +1,3 @@
-import { hexToRgba } from "@/utils/ColorUtils";
 import {
   Box,
   FormLabel,
@@ -8,7 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import HelpIcon from "@mui/icons-material/Help";
 import Image from "next/image";
 
 export const fullWidth = {
@@ -17,12 +15,6 @@ export const fullWidth = {
 
 export const dividerStyles = {
   width: "40%",
-};
-
-export const flexRow = {
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
 };
 
 export const logoWithText = {
@@ -39,7 +31,7 @@ export const logoWithTextForSmallScreen = {
 };
 
 export const LogoWithTextAndBanner = styled(Grid2)(({ theme }) => ({
-  backgroundColor: hexToRgba(theme.palette.primary.main, 0.15),
+  backgroundColor: theme.palette.background.default,
   height: "100%",
 }));
 
@@ -67,6 +59,8 @@ export const AuthPageBannerContainer = styled(Box)({
 
 export const AuthPageBanner = styled(Image)(({ theme }) => ({
   display: "block",
+  maxHeight: "60%",
+  maxWidth: "60%",
 
   [theme.breakpoints.down("md")]: {
     display: "none",
@@ -137,19 +131,6 @@ export const StyledTextfieldInput = styled(TextField)({
     padding: "5px 10px",
   },
 });
-
-export const StyledHelpIcon = styled(HelpIcon)(({ theme }) => ({
-  width: 12,
-  height: 12,
-  color: theme.palette.error.main,
-}));
-
-export const StyledErrorMessage = styled(Typography)(({ theme }) => ({
-  color: theme.palette.error.main,
-  fontSize: "12px",
-  fontWeight: "500",
-  marginLeft: "2px",
-}));
 
 interface RoleImageProps {
   isStudent?: boolean;
@@ -226,3 +207,9 @@ export const JumpToLoginOrSignupText = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
   textWrap: "nowrap",
 }));
+
+export const SwitchAuthFormContainer = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+});

@@ -1,23 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { AuthProviderPropsType, UserType } from "./type";
+import { AuthProviderPropsType } from "./type";
 import AuthContext from "./AuthContext";
+import { authService, LoginPayload } from "@/services/auth/authService";
+import { LoginAPIDataType } from "@/services/auth/types";
+import { ApiResponse } from "@/api/types";
+import { setCookie } from "@/utils/cookieUtils";
+import { useState } from "react";
+import { useAppDispatch } from "@/redux/store";
+import { setAppLoading } from "@/redux/slices/ui/uiSlice";
 
 const AuthProvider = ({ children }: AuthProviderPropsType) => {
-  const [user, setUser] = useState<UserType | null>(null);
+  const dispatch = useAppDispatch();
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    const localUser = window.localStorage.getItem("user");
+  const handleSignin = async (payload: LoginPayload) => {
+    const response: ApiResponse<LoginAPIDataType> = await authService.signin(
+      payload,
+    );
+    const { data, hasError } = response;
 
-    if (localUser) {
-      const parsedUser = JSON.parse(localUser);
-      setUser(parsedUser);
-
-      return;
-    } else {
-      // TODO: Call login API
+    if (!hasError && data && data.token) {
+      const token = data.token;
+      // Set token to cookie
+      setCookie("authToken", token);
+      setAuthToken(token);
     }
+    await dispatch(setAppLoading(false));
   };
 
   const handleLogout = () => {
@@ -28,7 +37,7 @@ const AuthProvider = ({ children }: AuthProviderPropsType) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login: handleLogin, logout: handleLogout }}
+      value={{ authToken, signin: handleSignin, logout: handleLogout }}
     >
       {children}
     </AuthContext.Provider>

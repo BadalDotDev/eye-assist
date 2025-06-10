@@ -47,7 +47,7 @@ export const signupSchema = yup
   })
   .required();
 
-export const loginSchema = yup
+export const signinSchema = yup
   .object({
     email: yup.string().trim().email().required("Email is required"),
     password: passwordValidation,

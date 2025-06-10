@@ -1,12 +1,19 @@
-import { LoadingBoxContainer } from "./styles";
+"use client";
 
-import Logo from "@/assets/Logo.png";
-import Image from "next/image";
+import { FC } from "react";
+import { LoadingBoxContainer, StyledLoadingLogo } from "./styles";
+import { LoadingBoxContainerProps } from "./type";
 
-const AppLoader = () => {
+import Logo from "@/assets/LogoV2.png";
+
+interface Props {
+  containerStyles?: LoadingBoxContainerProps;
+}
+
+const AppLoader: FC<Props> = ({ containerStyles = {} }) => {
   return (
-    <LoadingBoxContainer>
-      <Image src={Logo} alt="Logo" width={100} height={100} />
+    <LoadingBoxContainer {...containerStyles}>
+      <StyledLoadingLogo src={Logo} alt="Logo" />
     </LoadingBoxContainer>
   );
 };

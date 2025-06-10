@@ -13,7 +13,7 @@ export interface SignupFormInputsType {
   role: UserRoleEnum;
 }
 
-export interface LoginFormInputsType {
+export interface SigninFormInputsType {
   email: string;
   password: string;
 }

@@ -1,6 +1,7 @@
 import React from "react";
-import SignupPage from "@/features/auth/signup/SignupPage";
 
-const page = () => <SignupPage />;
+import AuthPageWithForm from "@/features/auth/shared/AuthPageWithForm";
+
+const page = () => <AuthPageWithForm isSignupPage />;
 
 export default page;
