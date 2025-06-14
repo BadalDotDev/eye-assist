@@ -1,3 +1,4 @@
+import { errorMessages } from "@/constants/messages/error";
 import { getCookie, removeCookie } from "@/utils/cookieUtils";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -46,6 +47,7 @@ api.interceptors.response.use(
 
       // Token expired
       if (status === 401 || (status === 403 && typeof window !== "undefined")) {
+        toast.error(errorMessages.common.autoLogout);
         removeCookie("authToken");
       }
     }

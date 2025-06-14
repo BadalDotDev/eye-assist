@@ -13,7 +13,6 @@ export function middleware(request: NextRequest) {
   // 🚫 If not logged in and trying to access protected route
   if (!token && !isPublic) {
     const loginUrl = new URL(routes.authSignin, request.url);
-    loginUrl.searchParams.set("reason", "unauthorized");
     return NextResponse.redirect(loginUrl);
   }
 

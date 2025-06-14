@@ -2,34 +2,29 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useAuth } from "@/context/auth/AuthContext";
 import AppLoader from "@/components/common/loading/AppLoader";
 import { useAppSelector } from "@/redux/store";
 import AuthPageWithForm from "@/features/auth/shared/AuthPageWithForm";
-import { errorMessages } from "@/constants/messages/error";
 
 export default function SigninPage() {
   const { authToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const reason = searchParams.get("reason");
+  const source = searchParams.get("from");
 
   const isAppLoading = useAppSelector((state) => state.ui.isAppLoading);
 
   useEffect(() => {
-    if (reason === "unauthorized" && !localStorage.getItem("redirectHandled")) {
-      toast.error(errorMessages.common.UnauthorizedAccess);
-      localStorage.setItem("redirectHandled", "true");
-    }
-
-    if (reason) {
+    // Clean up after short delay
+    if (reason || source) {
       window.history.replaceState({}, "", window.location.pathname);
       setTimeout(() => {
-        localStorage.removeItem("redirectHandled");
+        sessionStorage.removeItem("unauthorizedRedirectHandled");
       }, 100);
     }
-  }, [reason]);
+  }, [authToken, reason, source]);
 
   useEffect(() => {
     if (authToken) {
